@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <style>
+      #navDiv {
+        width: 100vw;
+        height: 50px;
+      }
+      #navDiv > nav {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: black;
+        align-items: center;
+      }
+      #navDiv > nav > li > a {
+        text-decoration: none;
+        color: white;
+      }
+      #navDiv > nav > li {
+        margin-right: 4rem;
+      }
+      #menuDiv {
+        width: 25rem;
+        height: 25rem;
+        background-color: rgb(5, 5, 65);
+        padding: 25px;
+        border-radius: 2rem;
+      }
+      #menuDiv h1 {
+        color: white;
+        text-align: center;
+      }
+      #menuDiv input {
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+      }
+      #menuDiv > div {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 1rem;
+      }
+      #menuDiv input::placeholder {
+        color: white;
+      }
+      #menuOfDishes {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        margin-top: 2rem;
+        grid-gap: 2rem;
+      }
+      #displayMenu {
+        padding: 25px;
+        border: 4px solid tomato;
+        height: 100vh;
+      }
+      .mainDiv {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1rem;
+      }
+      .mainDiv > div {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 20rem;
+        height: auto;
+        border: 1px solid red;
+        padding: 10px;
+      }
+      .mainDiv > div img {
+        width: 100%;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navDiv">
+      <nav>
+        <li><a href="login.html">Log in</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="cart.html">Your cart</a></li>
+      </nav>
+    </div>
+    <div id="menuOfDishes">
+      <div id="menuDiv">
+        <div>
+          <h1>Add information of dish you want to</h1>
+          <input type="text" placeholder="Enter dish image link" id="image" />
+          <input type="text" placeholder="Enter dish name" id="name" />
+          <input
+            type="text"
+            placeholder="Enter dish discription"
+            id="discription"
+          />
+          <input
+            type="number"
+            placeholder="Enter price of dish in rupees"
+            id="price"
+          />
+          <input
+            type="number"
+            placeholder="Enter prepare time for dish in minutes"
+            id="time"
+          />
+
+          <button onclick="addDish()">Add Dish</button>
+          <button onclick="showDishes(event)">show Dishes</button>
+        </div>
+      </div>
+      <div id="displayMenu"></div>
+    </div>
+    <script>
+      function addDish() {
+        let image = document.getElementById("image").value;
+        let name = document.getElementById("name").value;
+        let discription = document.getElementById("discription").value;
+        let price = document.getElementById("price").value;
+        let time = document.getElementById("time").value;
+
+        if (
+          name.length > 0 &&
+          discription.length > 0 &&
+          price.length > 0 &&
+          time.length > 0 &&
+          image.length > 0
+        ) {
+          let dish = {
+            image,
+            name,
+            discription,
+            price,
+            time,
+          };
+
+          let data1;
+          data1 = localStorage.getItem("dishes");
+          if (data1 == null) {
+            data1 = [];
+          } else {
+            data1 = JSON.parse(data);
+          }
+          data1.push(dish);
+          localStorage.setItem("dishes", JSON.stringify(data1));
+        } else {
+          alert("Please fill all the fields");
+        }
+      }
+      function showDishes(e) {
+        e.preventDefault();
+        const dishlist = JSON.parse(localStorage.getItem("dishes"));
+        var displayMenu = document.getElementById("displayMenu");
+        var mainDiv = document.createElement("div");
+        mainDiv.setAttribute("class", "mainDiv");
+        mainDiv.innerHTML = null;
+        dishlist.forEach(function (el) {
+          var div1 = document.createElement("div");
+          div1.setAttribute("class", "dishinfoDiv");
+          var img = document.createElement("img");
+          img.src = el.image;
+          var p1 = document.createElement("p");
+          p1.innerText = `${el.name}`;
+          var p2 = document.createElement("p");
+          p2.innerText = `${el.discription}`;
+          var p3 = document.createElement("p");
+          p3.innerText = `Price: ${el.price}`;
+          var p4 = document.createElement("p");
+          p4.innerText = `Time to prepare: ${el.time}`;
+          var cartBtn = document.createElement("button");
+          cartBtn.innerText = "Add to Cart";
+          cartBtn.onclick = function () {
+            addtoCart(el);
+          };
+          cartBtn.setAttribute("class", "cartBtn");
+
+          div1.append(img, p1, p2, p3, p4, cartBtn);
+          mainDiv.append(div1);
+          displayMenu.append(mainDiv);
+        });
+
+        function addtoCart(el) {
+          let arr;
+          arr = localStorage.getItem("cart");
+          if (arr == null) {
+            arr = [];
+          } else {
+            arr = JSON.parse(arr);
+          }
+          arr.push(el);
+          localStorage.setItem("cart", JSON.stringify(arr));
+        }
+      }
+    </script>
+  </body>
+</html>

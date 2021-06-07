@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your cart</title>
+    <style>
+      #navDiv {
+        width: 100vw;
+        height: 50px;
+      }
+      #navDiv > nav {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: black;
+        align-items: center;
+      }
+      #navDiv > nav > li > a {
+        text-decoration: none;
+        color: white;
+      }
+      #navDiv > nav > li {
+        margin-right: 4rem;
+      }
+      #displayCart {
+        width: 100vw;
+        height: 100vh;
+        margin-top: 2rem;
+      }
+      .topContent {
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+      }
+      #displayCart div:nth-child(1) > button {
+        width: 100px;
+        height: 40px;
+        color: white;
+        background-color: darkblue;
+      }
+      #cart {
+        display: grid;
+        grid-gap: 2rem;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+      #cart > div {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 20rem;
+        height: auto;
+        border: 1px solid red;
+        padding: 10px;
+      }
+      #cart > div img {
+        width: 100%;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navDiv">
+      <nav>
+        <li><a href="login.html">Log in</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="cart.html">Your cart</a></li>
+      </nav>
+    </div>
+    <div id="displayCart">
+      <div class="topContent">
+        <h1>Your Cart</h1>
+        <button onclick="submitOrder()">Submit Order</button>
+      </div>
+      <div id="cart"></div>
+    </div>
+    <script>
+      const favDishes = JSON.parse(localStorage.getItem("cart"));
+      var cart = document.getElementById("cart");
+      cart.innerHTML = null;
+      favDishes.forEach(function (el) {
+        var div3 = document.createElement("div");
+        var img = document.createElement("img");
+        img.src = el.image;
+        var p1 = document.createElement("p");
+        p1.innerText = el.name;
+        var p2 = document.createElement("p");
+        p2.innerText = el.discription;
+        var p3 = document.createElement("p");
+        p3.innerText = el.price;
+        var p4 = document.createElement("p");
+        p4.innerText = el.time;
+        div3.append(img, p1, p2, p3, p4);
+        cart.appendChild(div3);
+      });
+      function submitOrder() {
+        var count = 0;
+        favDishes.forEach(function (el) {
+          count += el.time;
+        });
+        count = count * 60;
+        alert(`Your order will be ready in ${count} seconds`);
+
+        setInterval(showMessage(), 3000);
+
+        function showMessage() {
+          var i = 0;
+          var arr1 = [
+            "Your order is accepted",
+            "Your order is being cooked",
+            "Your order is ready",
+            "Order out for delivery",
+            "Order delivered",
+          ];
+          alert(arr1[i]);
+        }
+        i++;
+      }
+    </script>
+  </body>
+</html>

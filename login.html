@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <style>
+      #navDiv {
+        width: 100vw;
+        height: 50px;
+      }
+      #navDiv > nav {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: black;
+        align-items: center;
+      }
+      #navDiv > nav > li > a {
+        text-decoration: none;
+        color: white;
+      }
+      #navDiv > nav > li {
+        margin-right: 4rem;
+      }
+      #login-box {
+        width: 20rem;
+        height: 20rem;
+        background-color: rgb(5, 5, 65);
+        padding: 25px;
+        margin: auto;
+        margin-top: 2rem;
+        border-radius: 2rem;
+      }
+      #login-box h1 {
+        color: white;
+        text-align: center;
+      }
+      #login-box input {
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+      }
+      #login {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navDiv">
+      <nav>
+        <li><a href="login.html">Log in</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="cart.html">Your cart</a></li>
+      </nav>
+    </div>
+    <div id="login-box">
+      <h1>Log In</h1>
+      <div id="login">
+        <input type="text" id="name" placeholder="enter your username" />
+        <input
+          type="password"
+          id="password"
+          placeholder="enter your password"
+        />
+        <button onclick="checkLogin()">Log in</button>
+      </div>
+    </div>
+    <script>
+      function checkLogin() {
+        const customers = JSON.parse(localStorage.getItem("customers"));
+        var name = document.getElementById("name").value;
+        var password = document.getElementById("password").value;
+        for (var i = 0; i < customers.length; i++) {
+          if (customers[i].name == name && customers[i].password == password) {
+            window.location.href = "index.html";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

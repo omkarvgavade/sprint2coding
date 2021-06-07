@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <style>
+      #navDiv {
+        width: 100vw;
+        height: 50px;
+      }
+      #navDiv > nav {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: black;
+        align-items: center;
+      }
+      #navDiv > nav > li > a {
+        text-decoration: none;
+        color: white;
+      }
+      #navDiv > nav > li {
+        margin-right: 4rem;
+      }
+      #signinDiv {
+        width: 25rem;
+        height: 25rem;
+        background-color: rgb(5, 5, 65);
+        padding: 25px;
+        margin: auto;
+        margin-top: 2rem;
+        border-radius: 2rem;
+      }
+      #signinDiv h1 {
+        color: white;
+        text-align: center;
+      }
+      #signinDiv input {
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+      }
+      #signinDiv > div {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 1rem;
+      }
+      #signinDiv input::placeholder {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navDiv">
+      <nav>
+        <li><a href="login.html">Log in</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="signin.html">Sign in</a></li>
+        <li><a href="cart.html">Your cart</a></li>
+      </nav>
+    </div>
+    <div id="signinDiv">
+      <div>
+        <h1>Sign IN</h1>
+        <input type="text" placeholder="Enter your name" id="name" />
+        <input type="email" placeholder="Enter your email address" id="email" />
+        <input type="number" placeholder="Enter your phone number" id="phone" />
+        <input type="text" placeholder="Enter your location" id="location" />
+        <input
+          type="password"
+          placeholder="Enter your password"
+          id="password"
+        />location"/>
+        <button onclick="signIn()">Sign in</button>
+      </div>
+    </div>
+    <script>
+      function signIn() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let ContactNumber = document.getElementById("phone").value;
+        let location = document.getElementById("location").value;
+        let password = document.getElementById("password").value;
+        if (
+          name.length > 0 &&
+          email.length > 0 &&
+          password.length > 0 &&
+          location.length > 0 &&
+          ContactNumber.length > 0
+        ) {
+          let customer = {
+            name,
+            email,
+            ContactNumber,
+            location,
+            password,
+          };
+
+          let data;
+          data = localStorage.getItem("customers");
+          if (data == null) {
+            data = [];
+          } else {
+            data = JSON.parse(data);
+          }
+          data.push(customer);
+          localStorage.setItem("customers", JSON.stringify(data));
+        } else {
+          alert("Please fill all the fields");
+        }
+      }
+    </script>
+  </body>
+</html>
